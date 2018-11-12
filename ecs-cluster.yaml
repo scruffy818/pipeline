@@ -1,0 +1,43 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+
+Description: Create Fargate ECS cluster for test cluster
+
+
+Parameters:
+  LaunchType:
+    Type: String
+    Default: Fargate
+
+  InstanceType:
+    Type: String
+    Default: t2.micro
+
+  ClusterSize:
+    Type: Number
+    Default: 2
+
+  Subnets:
+    Type: List<AWS::EC2::Subnet::Id>
+
+  SourceSecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+
+
+Mappings:
+  AWSRegionToAMI:
+    us-west-2:
+      AMI: ami-xxxxxxxxxxxxxxxxxxxxxxx
+
+Resources:
+  Cluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref AWS::StackName
+
+Outputs:
+  ClusterName:
+      Value: !Ref Cluster
